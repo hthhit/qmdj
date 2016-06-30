@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/qm-kaipan-common/src/main/main.iml" filepath="$PROJECT_DIR$/qm-kaipan-common/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qm-kaipan-service/src/main/main1.iml" filepath="$PROJECT_DIR$/qm-kaipan-service/src/main/main1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qm-kaipan-web/src/main/main2.iml" filepath="$PROJECT_DIR$/qm-kaipan-web/src/main/main2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qm-kaipan-db/src/main/main3.iml" filepath="$PROJECT_DIR$/qm-kaipan-db/src/main/main3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qm-kaipan-db/src/test/test.iml" filepath="$PROJECT_DIR$/qm-kaipan-db/src/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qm-kaipan-common/src/test/test1.iml" filepath="$PROJECT_DIR$/qm-kaipan-common/src/test/test1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qm-kaipan-service/src/test/test2.iml" filepath="$PROJECT_DIR$/qm-kaipan-service/src/test/test2.iml" />
+    </modules>
+  </component>
+</project>

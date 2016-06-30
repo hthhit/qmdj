@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-autowire="byName">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.qm.kaipan.db"></context:component-scan>
+
+	<bean id="abstractDataSource" abstract="true"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="maxIdleTime" value="60" />
+		<property name="idleConnectionTestPeriod" value="30" />
+		<property name="testConnectionOnCheckin" value="true" />
+		<property name="checkoutTimeout" value="3000" />
+	</bean>
+
+	<!-- #### mysql major dataSource #### -->
+	<bean id="dataSource" parent="abstractDataSource">
+		<property name="jdbcUrl" value="${mysql.major.jdbcUrl}" />
+		<property name="user" value="${mysql.major.user}" />
+		<property name="password" value="${mysql.major.password}" />
+		<property name="maxPoolSize" value="${mysql.major.maxPoolSize}" />
+		<property name="maxStatements" value="${mysql.major.maxStatements}" />
+	</bean>
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis.xml" />
+		<!-- <property name="mapperLocations" value="classpath:mapper/*-map.xml"></property> -->
+	</bean>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+</beans>

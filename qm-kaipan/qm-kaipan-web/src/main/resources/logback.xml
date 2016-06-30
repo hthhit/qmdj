@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+<configuration debug="${logback_debug_flag}">
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${g_log_encoder_pattern}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="RUN-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${g_log_path}/${g_log_file_run}</file>
+		<append>true</append>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${g_log_path}/${g_log_file_run}.%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>${g_log_max_history}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${g_log_encoder_pattern}</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC_RUN" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="RUN-FILE" />
+	</appender>
+
+	<appender name="PROFILER-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${g_log_path}/${g_log_file_profiler}</file>
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${g_log_path}/${g_log_file_profiler}.%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>${g_log_max_history}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC_PROFILER" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="PROFILER-FILE" />
+	</appender>
+	<logger name="com.qm" additivity="${log_console_flag}" level="${log_file_level}">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+
+	<logger name="org.mybatis" additivity="${log_console_flag}" level="WARN">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="com.ibatis" additivity="${log_console_flag}" level="WARN">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="com.mchange.v2" additivity="${log_console_flag}" level="WARN">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+
+	<logger name="org.springframework" additivity="${log_console_flag}" level="WARN">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="org.apache" additivity="${log_console_flag}" level="WARN">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="org.quartz" additivity="${log_console_flag}" level="WARN">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<logger name="httpclient" additivity="${log_console_flag}" level="WARN">
+		<appender-ref ref="ASYNC_RUN" />
+	</logger>
+	<root level="${log_file_level}">
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+</configuration>
